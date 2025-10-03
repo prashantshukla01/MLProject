@@ -1,111 +1,622 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Indicator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: #0a0e27;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 103, 132, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(99, 102, 241, 0.3) 0%, transparent 50%);
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(-5%, -5%) rotate(120deg); }
+            66% { transform: translate(5%, 5%) rotate(240deg); }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatParticle 8s infinite ease-in-out;
+        }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+            25% { transform: translate(30px, -30px) scale(1.2); opacity: 0.6; }
+            50% { transform: translate(-20px, -60px) scale(0.8); opacity: 0.4; }
+            75% { transform: translate(40px, -40px) scale(1.1); opacity: 0.5; }
+        }
+
+        /* Grid pattern overlay */
+        .grid-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .container {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px 45px;
+            max-width: 650px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 0 60px rgba(99, 102, 241, 0.3),
+                0 0 100px rgba(255, 103, 132, 0.2),
+                inset 0 0 60px rgba(255, 255, 255, 0.02);
+            animation: containerFloat 3s ease-in-out infinite;
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes containerFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Glow effect behind container */
+        .container::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #6366f1, #ec4899, #8b5cf6, #6366f1);
+            border-radius: 30px;
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(20px);
+            animation: glowRotate 4s linear infinite;
+        }
+
+        @keyframes glowRotate {
+            0% { filter: blur(20px) hue-rotate(0deg); }
+            100% { filter: blur(20px) hue-rotate(360deg); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+            animation: slideUp 0.6s ease-out both;
+            position: relative;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.15s; }
+        .form-group:nth-child(3) { animation-delay: 0.2s; }
+        .form-group:nth-child(4) { animation-delay: 0.25s; }
+        .form-group:nth-child(5) { animation-delay: 0.3s; }
+        .form-group:nth-child(6) { animation-delay: 0.35s; }
+        .form-group:nth-child(7) { animation-delay: 0.4s; }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            margin-right: 10px;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        select, input[type="number"] {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            font-size: 15px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            outline: none;
+            font-weight: 500;
+        }
+
+        select option {
+            background: #1f2937;
+            color: white;
+        }
+
+        select:focus, input[type="number"]:focus {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            box-shadow: 
+                0 0 0 4px rgba(102, 126, 234, 0.2),
+                0 8px 25px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+
+        select:hover, input[type="number"]:hover {
+            border-color: rgba(102, 126, 234, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-group.focused label {
+            color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 10px 30px rgba(102, 126, 234, 0.4),
+                0 0 0 0 rgba(102, 126, 234, 0.5);
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            animation: buttonPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% {
+                box-shadow: 
+                    0 10px 30px rgba(102, 126, 234, 0.4),
+                    0 0 0 0 rgba(102, 126, 234, 0.5);
+            }
+            50% {
+                box-shadow: 
+                    0 10px 40px rgba(102, 126, 234, 0.6),
+                    0 0 0 15px rgba(102, 126, 234, 0);
+            }
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .submit-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 
+                0 15px 40px rgba(102, 126, 234, 0.6),
+                0 0 60px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        .result {
+            margin-top: 35px;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(139, 92, 246, 0.2));
+            border: 2px solid rgba(236, 72, 153, 0.3);
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+            box-shadow: 
+                0 15px 40px rgba(236, 72, 153, 0.3),
+                inset 0 0 30px rgba(255, 255, 255, 0.05);
+            animation: resultAppear 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        @keyframes resultAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-10deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .loading.show {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 15px;
+            position: relative;
+        }
+
+        .spinner::before,
+        .spinner::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .spinner::before {
+            width: 100%;
+            height: 100%;
+            border: 4px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .spinner::after {
+            width: 100%;
+            height: 100%;
+            border: 4px solid transparent;
+            border-top-color: #667eea;
+            border-right-color: #ec4899;
+            border-bottom-color: #8b5cf6;
+            animation: spinnerRotate 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+
+        @keyframes spinnerRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading p {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+            animation: loadingText 1.5s ease-in-out infinite;
+        }
+
+        @keyframes loadingText {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Decorative elements */
+        .deco-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1), transparent);
+            pointer-events: none;
+        }
+
+        .deco-circle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            right: -150px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .deco-circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            left: -100px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            opacity: 1;
+        }
+
+        ::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 35px 25px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+
+            .form-group {
+                margin-bottom: 22px;
+            }
+        }
+    </style>
+</head>
 <body>
-    <div class="login">
-       <h1>Student Exam Performance Indicator</h1>
-   
-       <form action="{{ url_for('predict_datapoint')}}" method="post">
-        <h1>
-            <legend>Student Exam Performance Prediction</legend>
-        </h1>
-        <div class="mb-3">
-            <label class="form-label">Gender</label>
-            <select class="form-control" name="gender" placeholder="Enter you Gender" required>
-                <option class="placeholder" selected disabled value="">Select your Gender</option>
-                <option value="male">
-                    Male
-                </option>
-                <option value="female">
-                    Female
-                </option>
-            </select>
+    <div class="grid-overlay"></div>
+    
+    <!-- Decorative circles -->
+    <div class="deco-circle"></div>
+    <div class="deco-circle"></div>
+
+    <script>
+        // Create floating particles
+        for (let i = 0; i < 25; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 4 + 2;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = Math.random() * 6 + 6 + 's';
+            document.body.appendChild(particle);
+        }
+    </script>
+
+    <div class="container">
+        <div class="header">
+            <h1>📊 Student Performance Predictor</h1>
+            <p class="subtitle">Advanced ML-Powered Academic Forecasting</p>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Race or Ethnicity</label>
-            <select class="form-control" name="ethnicity" placeholder="Enter you ethnicity" required>
-                <option class="placeholder" selected disabled value="">Select Ethnicity</option>
-                <option value="group A">
-                    Group A
-                </option>
-                <option value="group B">
-                    Group B
-                </option>
-                <option value="group C">
-                    Group C
-                </option>
-                <option value="group D">
-                    Group D
-                </option>
-                <option value="group E">
-                    Group E
-                </option>
-            </select>
+        
+        <form action="{{ url_for('predict_datapoint')}}" method="post" id="predictionForm">
+            <div class="form-group">
+                <label><span class="icon">👤</span>Gender</label>
+                <select name="gender" required>
+                    <option value="" disabled selected>Select your Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label><span class="icon">🌍</span>Ethnicity</label>
+                <select name="ethnicity" required>
+                    <option value="" disabled selected>Select Ethnicity</option>
+                    <option value="group A">Group A</option>
+                    <option value="group B">Group B</option>
+                    <option value="group C">Group C</option>
+                    <option value="group D">Group D</option>
+                    <option value="group E">Group E</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label><span class="icon">🎓</span>Parent Education</label>
+                <select name="parental_level_of_education" required>
+                    <option value="" disabled selected>Select Parent Education</option>
+                    <option value="associate's degree">Associate's Degree</option>
+                    <option value="bachelor's degree">Bachelor's Degree</option>
+                    <option value="high school">High School</option>
+                    <option value="master's degree">Master's Degree</option>
+                    <option value="some college">Some College</option>
+                    <option value="some high school">Some High School</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label><span class="icon">🍽️</span>Lunch Type</label>
+                <select name="lunch" required>
+                    <option value="" disabled selected>Select Lunch Type</option>
+                    <option value="free/reduced">Free/Reduced</option>
+                    <option value="standard">Standard</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label><span class="icon">📚</span>Test Prep Course</label>
+                <select name="test_preparation_course" required>
+                    <option value="" disabled selected>Select Test Course</option>
+                    <option value="none">None</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label><span class="icon">✍️</span>Reading Score</label>
+                <input type="number" name="reading_score" placeholder="Enter Reading Score (0-100)" min="0" max="100" required>
+            </div>
+
+            <div class="form-group">
+                <label><span class="icon">📝</span>Writing Score</label>
+                <input type="number" name="writing_score" placeholder="Enter Writing Score (0-100)" min="0" max="100" required>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <span style="position: relative; z-index: 1;">🎯 Predict Math Score</span>
+            </button>
+        </form>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Analyzing Performance Data...</p>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Parental Level of Education</label>
-            <select class="form-control" name="parental_level_of_education"
-                placeholder="Enter you Parent Education" required>
-                <option class="placeholder" selected disabled value="">Select Parent Education</option>
-                <option value="associate's degree">
-                    associate's degree
-                </option>
-                <option value="bachelor's degree">
-                    bachelor's degree
-                </option>
-                <option value="high school">
-                    high school
-                </option>
-                <option value="master's degree">
-                    master's degree
-                </option>
-                <option value="some college">
-                    some college
-                </option>
-                <option value="some high school">
-                    some high school
-                </option>
-            </select>
+
+        <div class="result" id="result">
+            <div style="position: relative; z-index: 1;">
+                <div style="font-size: 16px; opacity: 0.8; margin-bottom: 8px;">PREDICTED MATH SCORE</div>
+                <div style="font-size: 42px; font-weight: 900; text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);">{{ results }}</div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Lunch Type</label>
-            <select class="form-control" name="lunch" placeholder="Enter you Lunch" required>
-                <option class="placeholder" selected disabled value="">Select Lunch Type</option>
-                <option value="free/reduced">
-                    free/reduced
-                </option>
-                <option value="standard">
-                    standard
-                </option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Test preparation Course</label>
-            <select class="form-control" name="test_preparation_course" placeholder="Enter you Course"
-                required>
-                <option class="placeholder" selected disabled value="">Select Test_course</option>
-                <option value="none">
-                    None
-                </option>
-                <option value="completed">
-                    Completed
-                </option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Writing Score out of 100</label>
-            <input class="form-control" type="number" name="reading_score"
-                placeholder="Enter your Reading score" min='0' max='100' />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Reading Score out of 100</label>
-            <input class="form-control" type="number" name="writing_score"
-                placeholder="Enter your Reading Score" min='0' max='100' />
-        </div>
-        <div class="mb-3">
-            <input class="btn btn-primary" type="submit" value="Predict your Maths Score" required />
-        </div>
-    </form>
-    <h2>
-       THE  prediction is {{results}}
-    </h2>
-   <body>
+    </div>
+
+    <script>
+        const form = document.getElementById('predictionForm');
+        const inputs = document.querySelectorAll('select, input');
+        
+        // Enhanced focus effects
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.closest('.form-group').classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.closest('.form-group').classList.remove('focused');
+            });
+
+            // Add value change animation
+            input.addEventListener('change', function() {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = 'valueChanged 0.3s ease-out';
+                }, 10);
+            });
+        });
+
+        // Show result if exists
+        const resultDiv = document.getElementById('result');
+        if (resultDiv.textContent.trim() && '{{ results }}') {
+            resultDiv.classList.add('show');
+        }
+
+        // Loading animation on submit
+        form.addEventListener('submit', function() {
+            document.getElementById('loading').classList.add('show');
+        });
+
+        // Add value changed animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes valueChanged {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.02); background: rgba(102, 126, 234, 0.15); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
 </html>

@@ -1,1 +1,546 @@
-<h1> welcome to the home page </h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Predictor - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: #0a0e27;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* Animated gradient background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 103, 132, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(99, 102, 241, 0.4) 0%, transparent 50%);
+            animation: gradientShift 20s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(-10%, -10%) rotate(120deg); }
+            66% { transform: translate(10%, 10%) rotate(240deg); }
+        }
+
+        /* Particle system */
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatParticle 12s infinite ease-in-out;
+        }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+            25% { transform: translate(50px, -50px) scale(1.5); opacity: 0.5; }
+            50% { transform: translate(-30px, -100px) scale(0.8); opacity: 0.3; }
+            75% { transform: translate(60px, -60px) scale(1.2); opacity: 0.4; }
+        }
+
+        /* Grid overlay */
+        .grid-overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 30s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 60px;
+            z-index: 2;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 900;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            animation: textGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.4)); }
+            50% { filter: drop-shadow(0 0 40px rgba(102, 126, 234, 0.8)); }
+        }
+
+        .hero p {
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+            font-weight: 500;
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.7s both;
+        }
+
+        .cta-primary {
+            padding: 18px 45px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-primary:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 18px 45px rgba(102, 126, 234, 0.6);
+        }
+
+        .cta-secondary {
+            padding: 18px 45px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-5px);
+        }
+
+        /* Features Section */
+        .features {
+            position: relative;
+            padding: 80px 50px;
+            z-index: 2;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.6s ease-out both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #6366f1, #ec4899, #8b5cf6, #6366f1);
+            border-radius: 25px;
+            z-index: -1;
+            opacity: 0;
+            filter: blur(20px);
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.5;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.4);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Stats Section */
+        .stats {
+            position: relative;
+            padding: 80px 50px;
+            z-index: 2;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-card {
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            padding: 40px 50px;
+            text-align: center;
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 25px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-primary, .cta-secondary {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .features, .stats {
+                padding: 60px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="grid-overlay"></div>
+
+    <script>
+        // Create floating particles
+        const bgAnimation = document.querySelector('.bg-animation');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 5 + 2;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 12 + 's';
+            particle.style.animationDuration = Math.random() * 8 + 8 + 's';
+            bgAnimation.appendChild(particle);
+        }
+    </script>
+
+    <nav>
+        <div class="logo">📊 Performance Predictor</div>
+        <a href="/predictdata" style="text-decoration: none;">
+            <button class="nav-btn">Get Started</button>
+        </a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to the Home Page</h1>
+            <p>Harness the power of machine learning to predict student academic performance with precision and insight. Our advanced AI analyzes multiple factors to provide accurate math score predictions.</p>
+            <div class="cta-buttons">
+                <a href="/predictdata" style="text-decoration: none;">
+                    <button class="cta-primary">
+                        <span style="position: relative; z-index: 1;">🚀 Start Prediction</span>
+                    </button>
+                </a>
+                <button class="cta-secondary">📖 Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI-Powered Analysis</h3>
+                <p>Our machine learning model analyzes demographic factors, test preparation, and existing scores to deliver highly accurate predictions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Instant Results</h3>
+                <p>Get real-time predictions in seconds. Our optimized system processes your data instantly to provide immediate insights.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>High Accuracy</h3>
+                <p>Built on comprehensive data analysis and validated models, ensuring reliable predictions you can trust for academic planning.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">95%</div>
+                <div class="stat-label">Prediction Accuracy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">10K+</div>
+                <div class="stat-label">Predictions Made</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Data Points Analyzed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Always Available</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Student Performance Predictor. Empowering education through AI.</p>
+    </footer>
+
+    <script>
+        // Smooth scroll for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = '';
+                }, 10);
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.feature-card, .stat-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
