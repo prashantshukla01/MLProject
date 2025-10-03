@@ -11,24 +11,28 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
         body {
             font-family: 'Inter', 'Segoe UI', sans-serif;
             background: #0a0e27;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            padding: 40px 20px;
             position: relative;
-            overflow: hidden;
         }
 
         /* Animated gradient background */
         body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             width: 200%;
             height: 200%;
+            top: 0;
+            left: 0;
+            z-index: 0;
             background: 
                 radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(255, 103, 132, 0.3) 0%, transparent 50%),
@@ -44,11 +48,12 @@
 
         /* Floating particles */
         .particle {
-            position: absolute;
+            position: fixed;
             background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
             border-radius: 50%;
             pointer-events: none;
             animation: floatParticle 8s infinite ease-in-out;
+            z-index: 1;
         }
 
         @keyframes floatParticle {
@@ -60,14 +65,18 @@
 
         /* Grid pattern overlay */
         .grid-overlay {
-            position: absolute;
+            position: fixed;
             width: 100%;
             height: 100%;
+            top: 0;
+            left: 0;
             background-image: 
                 linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             animation: gridMove 20s linear infinite;
+            z-index: 1;
+            pointer-events: none;
         }
 
         @keyframes gridMove {
@@ -75,26 +84,71 @@
             100% { transform: translate(50px, 50px); }
         }
 
-        .container {
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 50px 45px;
-            max-width: 650px;
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 
-                0 0 60px rgba(99, 102, 241, 0.3),
-                0 0 100px rgba(255, 103, 132, 0.2),
-                inset 0 0 60px rgba(255, 255, 255, 0.02);
-            animation: containerFloat 3s ease-in-out infinite;
-            position: relative;
-            z-index: 10;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideDown 0.6s ease-out;
         }
 
-        @keyframes containerFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .home-btn {
+            padding: 10px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .home-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(30px);
+            border-radius: 28px;
+            padding: 45px 40px;
+            max-width: 700px;
+            width: 100%;
+            margin: 100px auto 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 20px 60px rgba(99, 102, 241, 0.3),
+                0 0 100px rgba(255, 103, 132, 0.15),
+                inset 0 0 40px rgba(255, 255, 255, 0.02);
+            position: relative;
+            z-index: 10;
         }
 
         /* Glow effect behind container */
@@ -103,54 +157,49 @@
             position: absolute;
             inset: -2px;
             background: linear-gradient(45deg, #6366f1, #ec4899, #8b5cf6, #6366f1);
-            border-radius: 30px;
+            border-radius: 28px;
             z-index: -1;
-            opacity: 0.5;
-            filter: blur(20px);
-            animation: glowRotate 4s linear infinite;
+            opacity: 0.4;
+            filter: blur(25px);
+            animation: glowRotate 5s linear infinite;
         }
 
         @keyframes glowRotate {
-            0% { filter: blur(20px) hue-rotate(0deg); }
-            100% { filter: blur(20px) hue-rotate(360deg); }
+            0% { filter: blur(25px) hue-rotate(0deg); }
+            100% { filter: blur(25px) hue-rotate(360deg); }
         }
 
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             animation: fadeInDown 0.8s ease-out;
         }
 
         h1 {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             letter-spacing: -0.5px;
         }
 
         .subtitle {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 14px;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 13px;
             font-weight: 500;
+            letter-spacing: 0.3px;
         }
 
         @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .form-group {
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             animation: slideUp 0.6s ease-out both;
             position: relative;
         }
@@ -164,48 +213,41 @@
         .form-group:nth-child(7) { animation-delay: 0.4s; }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         label {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: rgba(255, 255, 255, 0.9);
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         .icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 8px;
-            margin-right: 10px;
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            border-radius: 7px;
+            margin-right: 9px;
+            font-size: 13px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
         }
 
         select, input[type="number"] {
             width: 100%;
-            padding: 16px 20px;
+            padding: 14px 18px;
             border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            font-size: 15px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 14px;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             background: rgba(255, 255, 255, 0.05);
             color: white;
             outline: none;
@@ -221,54 +263,38 @@
             border-color: #667eea;
             background: rgba(102, 126, 234, 0.1);
             box-shadow: 
-                0 0 0 4px rgba(102, 126, 234, 0.2),
-                0 8px 25px rgba(102, 126, 234, 0.3);
-            transform: translateY(-2px);
+                0 0 0 3px rgba(102, 126, 234, 0.15),
+                0 6px 20px rgba(102, 126, 234, 0.25);
+            transform: translateY(-1px);
         }
 
         select:hover, input[type="number"]:hover {
-            border-color: rgba(102, 126, 234, 0.5);
+            border-color: rgba(102, 126, 234, 0.4);
             background: rgba(255, 255, 255, 0.08);
         }
 
         .form-group.focused label {
             color: #667eea;
-            transform: translateX(5px);
+            transform: translateX(3px);
         }
 
         .submit-btn {
             width: 100%;
-            padding: 18px;
+            padding: 16px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 15px;
-            font-size: 17px;
+            border-radius: 14px;
+            font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 
-                0 10px 30px rgba(102, 126, 234, 0.4),
-                0 0 0 0 rgba(102, 126, 234, 0.5);
-            margin-top: 15px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            margin-top: 10px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             position: relative;
             overflow: hidden;
-            animation: buttonPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes buttonPulse {
-            0%, 100% {
-                box-shadow: 
-                    0 10px 30px rgba(102, 126, 234, 0.4),
-                    0 0 0 0 rgba(102, 126, 234, 0.5);
-            }
-            50% {
-                box-shadow: 
-                    0 10px 40px rgba(102, 126, 234, 0.6),
-                    0 0 0 15px rgba(102, 126, 234, 0);
-            }
         }
 
         .submit-btn::before {
@@ -279,40 +305,38 @@
             width: 0;
             height: 0;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.25);
             transform: translate(-50%, -50%);
             transition: width 0.6s, height 0.6s;
         }
 
         .submit-btn:hover::before {
-            width: 300px;
-            height: 300px;
+            width: 350px;
+            height: 350px;
         }
 
         .submit-btn:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 
-                0 15px 40px rgba(102, 126, 234, 0.6),
-                0 0 60px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.55);
         }
 
         .submit-btn:active {
-            transform: translateY(-2px) scale(0.98);
+            transform: translateY(-1px) scale(0.99);
         }
 
         .result {
-            margin-top: 35px;
-            padding: 25px;
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(139, 92, 246, 0.2));
-            border: 2px solid rgba(236, 72, 153, 0.3);
-            border-radius: 20px;
+            margin-top: 30px;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(139, 92, 246, 0.15));
+            border: 2px solid rgba(236, 72, 153, 0.25);
+            border-radius: 18px;
             text-align: center;
             color: white;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
             box-shadow: 
-                0 15px 40px rgba(236, 72, 153, 0.3),
-                inset 0 0 30px rgba(255, 255, 255, 0.05);
+                0 12px 35px rgba(236, 72, 153, 0.25),
+                inset 0 0 25px rgba(255, 255, 255, 0.03);
             animation: resultAppear 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             display: none;
             position: relative;
@@ -326,7 +350,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.08), transparent);
             animation: shimmer 3s infinite;
         }
 
@@ -340,23 +364,15 @@
         }
 
         @keyframes resultAppear {
-            0% {
-                opacity: 0;
-                transform: scale(0.5) rotate(-10deg);
-            }
-            50% {
-                transform: scale(1.1) rotate(5deg);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) rotate(0deg);
-            }
+            0% { opacity: 0; transform: scale(0.6) rotate(-8deg); }
+            50% { transform: scale(1.08) rotate(3deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
         }
 
         .loading {
             display: none;
             text-align: center;
-            margin-top: 25px;
+            margin-top: 22px;
         }
 
         .loading.show {
@@ -370,9 +386,9 @@
         }
 
         .spinner {
-            width: 50px;
-            height: 50px;
-            margin: 0 auto 15px;
+            width: 45px;
+            height: 45px;
+            margin: 0 auto 12px;
             position: relative;
         }
 
@@ -386,13 +402,13 @@
         .spinner::before {
             width: 100%;
             height: 100%;
-            border: 4px solid rgba(102, 126, 234, 0.2);
+            border: 3px solid rgba(102, 126, 234, 0.2);
         }
 
         .spinner::after {
             width: 100%;
             height: 100%;
-            border: 4px solid transparent;
+            border: 3px solid transparent;
             border-top-color: #667eea;
             border-right-color: #ec4899;
             border-bottom-color: #8b5cf6;
@@ -405,8 +421,9 @@
         }
 
         .loading p {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.75);
             font-weight: 600;
+            font-size: 14px;
             animation: loadingText 1.5s ease-in-out infinite;
         }
 
@@ -415,42 +432,27 @@
             50% { opacity: 1; }
         }
 
-        /* Decorative elements */
-        .deco-circle {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.1), transparent);
-            pointer-events: none;
-        }
-
-        .deco-circle:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            top: -150px;
-            right: -150px;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .deco-circle:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            bottom: -100px;
-            left: -100px;
-            animation: float 8s ease-in-out infinite reverse;
-        }
-
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button {
             opacity: 1;
         }
 
         ::placeholder {
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.35);
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
             .container {
-                padding: 35px 25px;
+                padding: 35px 28px;
+                margin: 90px auto 30px;
             }
             
             h1 {
@@ -458,21 +460,22 @@
             }
 
             .form-group {
-                margin-bottom: 22px;
+                margin-bottom: 20px;
+            }
+
+            .submit-btn {
+                padding: 15px;
+                font-size: 15px;
             }
         }
     </style>
 </head>
 <body>
     <div class="grid-overlay"></div>
-    
-    <!-- Decorative circles -->
-    <div class="deco-circle"></div>
-    <div class="deco-circle"></div>
 
     <script>
         // Create floating particles
-        for (let i = 0; i < 25; i++) {
+        for (let i = 0; i < 20; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
             const size = Math.random() * 4 + 2;
@@ -485,6 +488,11 @@
             document.body.appendChild(particle);
         }
     </script>
+
+    <nav>
+        <div class="logo">📊 Performance Predictor</div>
+        <a href="/" class="home-btn">← Home</a>
+    </nav>
 
     <div class="container">
         <div class="header">
@@ -567,8 +575,8 @@
 
         <div class="result" id="result">
             <div style="position: relative; z-index: 1;">
-                <div style="font-size: 16px; opacity: 0.8; margin-bottom: 8px;">PREDICTED MATH SCORE</div>
-                <div style="font-size: 42px; font-weight: 900; text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);">{{ results }}</div>
+                <div style="font-size: 14px; opacity: 0.75; margin-bottom: 7px; letter-spacing: 1px;">PREDICTED MATH SCORE</div>
+                <div style="font-size: 38px; font-weight: 900; text-shadow: 0 0 18px rgba(255, 255, 255, 0.4);">{{ results }}</div>
             </div>
         </div>
     </div>
@@ -612,7 +620,7 @@
         style.textContent = `
             @keyframes valueChanged {
                 0% { transform: scale(1); }
-                50% { transform: scale(1.02); background: rgba(102, 126, 234, 0.15); }
+                50% { transform: scale(1.015); background: rgba(102, 126, 234, 0.12); }
                 100% { transform: scale(1); }
             }
         `;
